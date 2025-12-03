@@ -26,7 +26,7 @@ def haversine(lat1, lon1, lat2, lon2):
     phi1, phi2 = math.radians(lat1), math.radians(lat2)
     dphi = math.radians(lat2 - lat1)
     dlambda = math.radians(lon2 - lon1)
-    a = math.sin(dphi/2)**2 + math.cos(phi1)*math.cos(phi2)*math.sin(dlambda/2)**2
+    a = math.sin(dphi/2)*2 + math.cos(phi1)*math.cos(phi2)*math.sin(dlambda/2)*2
     return 2*R*math.asin(math.sqrt(a))
 
 def bearing(lat1, lon1, lat2, lon2):
@@ -100,14 +100,31 @@ def make_windows(df, feature_cols, window_size=32, stride=8):
 # -------------------------
 def load_csv(path):
     df = pd.read_csv(path)
-    # try to map alt names to required names
+    # map common alternative column names to our expected names
+    rename_map = {}
+    if 'lat' in df.columns and 'longitude' not in df.columns:
+        rename_map['lat'] = 'latitude'
+    if 'lon' in df.columns and 'longitude' not in df.columns:
+        rename_map['lon'] = 'longitude'
+    if 'Latitude' in df.columns and 'latitude' not in df.columns:
+        rename_map['Latitude'] = 'latitude'
+    if 'Longitude' in df.columns and 'longitude' not in df.columns:
+        rename_map['Longitude'] = 'longitude'
+    if 'datetime' in df.columns and 'timestamp' not in df.columns:
+        rename_map['datetime'] = 'timestamp'
+    if 'time' in df.columns and 'timestamp' not in df.columns:
+        rename_map['time'] = 'timestamp'
+    if rename_map:
+        df = df.rename(columns=rename_map)
+
+    # now validate
     if 'timestamp' not in df.columns:
         for c in ['time','utc','datetime','date']:
             if c in df.columns:
                 df['timestamp'] = df[c]
                 break
     if 'latitude' not in df.columns or 'longitude' not in df.columns:
-        raise SystemExit(f"CSV {path} must contain latitude and longitude columns")
+        raise SystemExit(f"CSV {path} must contain latitude and longitude columns (or lat/lon alternatives)")
     if 'user_id' not in df.columns:
         df['user_id'] = df.index.astype(str)
     df['latitude'] = df['latitude'].astype(float)
@@ -115,6 +132,7 @@ def load_csv(path):
     df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
     df = df.dropna(subset=['timestamp','latitude','longitude']).reset_index(drop=True)
     return df
+
 
 def main(args):
     os.makedirs(os.path.dirname(args.out_csv) or '.', exist_ok=True)
@@ -165,4 +183,3 @@ if __name__ == "__main__":
     p.add_argument('--stride', dest='stride', type=int, default=8)
     args = p.parse_args()
     main(args)
-
