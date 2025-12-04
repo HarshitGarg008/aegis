@@ -8,10 +8,17 @@ __pycache__/
 *.pkl
 *.log
 
+data/processed/passwords/
+data/raw/passwords/passwords.csv
+data/raw/passwords/passwords_clean.csv
+*.pkl
+*.json
+*.npy
+
+
 # Virtual environment
 .venv/
 venv/
-.venv-1/
 env/
 
 # -----------------------------------
@@ -42,14 +49,6 @@ data/features/
 # data/raw/**/*
 # !data/raw/.keep
 
-# -----------------------------------
-# Models & large artifacts
-# -----------------------------------
-# models/
-# *.h5
-# *.pth
-# *.pt
-# *.ckpt
 
 # -----------------------------------
 # Jupyter
