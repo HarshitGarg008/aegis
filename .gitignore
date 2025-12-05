@@ -1,1 +1,90 @@
+<<<<<<< HEAD
 ageis-dead3-firebase-adminsdk-fbsvc-589b74d7f8.json
+=======
+# -----------------------------------
+# Python
+# -----------------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.log
+
+data/processed/passwords/
+data/raw/passwords/passwords.csv
+data/raw/passwords/passwords_clean.csv
+*.pkl
+*.json
+*.npy
+
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# -----------------------------------
+# macOS
+# -----------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# -----------------------------------
+# VSCode
+# -----------------------------------
+.vscode/
+.history/
+
+# -----------------------------------
+# Project specific data folders
+# -----------------------------------
+
+# Ignore all raw datasets
+data/raw/
+
+# Ignore processed & feature-engineered data
+data/processed/
+data/features/
+
+# Keep folder structure but ignore files inside (optional)
+# data/raw/**/*
+# !data/raw/.keep
+
+
+# -----------------------------------
+# Jupyter
+# -----------------------------------
+.ipynb_checkpoints/
+
+# -----------------------------------
+# Auto-generated outputs
+# -----------------------------------
+output/
+outputs/
+
+# -----------------------------------
+# Windows temp files
+# -----------------------------------
+windows/
+
+# -----------------------------------
+# Config & secret files
+# -----------------------------------
+config/*.json
+config/*.yaml
+config/*.yml
+aws/*
+
+# -----------------------------------
+# Shell scripts - uncomment if needed
+# -----------------------------------
+# aegis_project_scaffold.sh
+# aegis_scaffold.sh
+
+# -----------------------------------
+# Notebooks
+# -----------------------------------
+notebooks/*.ipynb
+>>>>>>> fe5441ca2018f6adef720a78aad766920d0e7224
